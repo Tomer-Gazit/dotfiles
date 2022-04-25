@@ -6,9 +6,9 @@ if [ -f /etc/bashrc ]; then
 fi
 
 # Source .bash_aliases
-if [ -f ~/.bash_aliases ]; then
-  . ~/.bash_aliases
-fi
+[ -f ~/.bash_aliases ] && source ~/.bash_aliases \
+                        && echo "~/.bash_aliases LOADED" \
+                        || echo "~/.bash_aliases NOT FOUND"
 
 # User specific environment
 PATH="$HOME/.local/bin:$HOME/bin:$PATH"
