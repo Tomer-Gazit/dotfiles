@@ -1,6 +1,5 @@
 " VIMRC
 " Settings -------------------------------------------------------- {{{
-
 set encoding=utf-8
 
 set laststatus=2
@@ -12,7 +11,9 @@ set showmode
 set showcmd
 
 set list
-hi NonText ctermfg=LightCyan
+set listchars=tab:>-,trail:-,nbsp:+,eol:҂,extends:>,precedes:<
+" set listchars=tab:>-,trail:-,eol:¶,nbsp:+,extends:>,precedes:<,multispace:---•,lead:𝅛
+hi NonText ctermfg=DarkGrey
 set colorcolumn=80
 hi ColorColumn ctermbg=5 guibg=#423880
 hi CursorLine cterm=none ctermbg=Gray ctermfg=0 guibg=Gray
@@ -187,4 +188,3 @@ augroup filetype_vim
 augroup END
 "" }}}
 " }}}
-
