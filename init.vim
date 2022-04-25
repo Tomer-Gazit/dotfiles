@@ -47,28 +47,36 @@ nnoremap <Leader><S-Tab> <C-PageUp>
 
 """ Easier window navigation -------------------------------------- {{{
 """" Terminal mode ------------------------------------------------ {{{
-:tnoremap <A-H> <C-\><C-N><C-w>h
-:tnoremap <A-h> <C-\><C-N><C-w>h
-:tnoremap <A-J> <C-\><C-N><C-w>j
-:tnoremap <A-K> <C-\><C-N><C-w>k
-:tnoremap <A-L> <C-\><C-N><C-w>l
-:tnoremap <A-l> <C-\><C-N><C-w>l
+:tnoremap <A-H> <C-\><C-N>:wincmd h<cr>
+:tnoremap <A-h> <C-\><C-N>:wincmd h<cr>
+:tnoremap <A-J> <C-\><C-N>:wincmd j<cr>
+:tnoremap <A-K> <C-\><C-N>:wincmd k<cr>
+:tnoremap <A-L> <C-\><C-N>:wincmd l<cr>
+:tnoremap <A-l> <C-\><C-N>:wincmd l<cr>
 """" }}}
 """" Insert mode -------------------------------------------------- {{{
-:inoremap <A-H> <C-\><C-N><C-w>h
-:inoremap <A-h> <C-\><C-N><C-w>h
-:inoremap <A-J> <C-\><C-N><C-w>j
-:inoremap <A-K> <C-\><C-N><C-w>k
-:inoremap <A-L> <C-\><C-N><C-w>l
-:inoremap <A-l> <C-\><C-N><C-w>l
+:inoremap <A-H> <C-\><C-N>:wincmd h<cr>
+:inoremap <A-h> <C-\><C-N>:wincmd h<cr>
+:inoremap <A-J> <C-\><C-N>:wincmd j<cr>
+:inoremap <A-K> <C-\><C-N>:wincmd k<cr>
+:inoremap <A-L> <C-\><C-N>:wincmd l<cr>
+:inoremap <A-l> <C-\><C-N>:wincmd l<cr>
 """" }}}
 """" Normal mode -------------------------------------------------- {{{
-:nnoremap <A-H> <C-w>h
-:nnoremap <A-h> <C-w>h
-:nnoremap <A-J> <C-w>j
-:nnoremap <A-K> <C-w>k
-:nnoremap <A-L> <C-w>l
-:nnoremap <A-l> <C-w>l
+" Left
+:nnoremap <A-H> :wincmd h<cr>
+:nnoremap <Leader>h :wincmd h<cr>
+:nnoremap <A-h> :wincmd h<cr>
+" Down
+:nnoremap <Leader>j :wincmd j<cr>
+:nnoremap <A-J> :wincmd j<cr>
+" Up
+:nnoremap <Leader>k :wincmd k<cr>
+:nnoremap <A-K> :wincmd k<cr>
+" Right
+:nnoremap <A-L> :wincmd l<cr>
+:nnoremap <Leader>l :wincmd l<cr>
+:nnoremap <A-l> :wincmd l<cr>
 """" }}}
 """ }}}
 
@@ -105,7 +113,7 @@ inoremap <M-j> <Esc>:m.+1<CR>==gi
 
 "" Advanced mappings ---------------------------------------------- {{{
 """ Toggle Comments ----------------------------------------------- {{{
-source C:\Users\User\AppData\Local\nvim\toggleComment.vim
+source ~/.vim/toggleComment.vim
 """" Not inline_mode {{{
 """"" Terminal specific mappings {{{
 if has('ttyout')
