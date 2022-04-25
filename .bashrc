@@ -6,5 +6,5 @@ alias mkdir="mkdir -pv"
 
 # ls only dotfiles
 function lh() {
-	[ -z $1 ] && ls -d .* || ls -d "$1"/.*
+	[ -z $1 ] && ls -dF .* || ls -dF "$1"/.*
 }
