@@ -2,7 +2,12 @@
 
 # Source global definitions
 if [ -f /etc/bashrc ]; then
-	. /etc/bashrc
+  . /etc/bashrc
+fi
+
+# Source .bash_aliases
+if [ -f ~/.bash_aliases ]; then
+  . ~/.bash_aliases
 fi
 
 # User specific environment
