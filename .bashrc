@@ -31,9 +31,11 @@ function gitACP() {
   if [ -z "$1" ]; then
     echo "Please provide path to repository"
   else
-    getTime=$(TZ=":Israel" date +"Auto commit @ %T | %a %d/%m/%y") &&
+    [ -z "$2" ] &&
+      commitMessage=$(TZ=":Israel" date +"Auto commit @ %T | %a %d/%m/%y") ||
+      commitMessage="$2"
     git -C $1 add --all &&
-    git -C $1 commit -m "${getTime}" &&
+    git -C $1 commit -m "${commitMessage}" &&
     git -C $1 push &&
     echo "Pushed '$1' successfully" || echo "ACP failed"
   fi
