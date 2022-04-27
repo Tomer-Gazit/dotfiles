@@ -1,3 +1,4 @@
+alias sudo="sudo "
 alias cls="clear"
 alias c="clear"
 alias l.="lh"

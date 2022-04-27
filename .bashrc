@@ -25,3 +25,13 @@ alias mkdir="mkdir -pv"
 function lh() {
 	[ -z $1 ] && ls -dF .* || ls -dF "$1"/.*
 }
+
+# Auto add commit & push dotfiles to git
+function gitACP() {
+  [ -z "$1" ] && echo "Please provide path to repository" || \
+  git -C $1 add --all && \
+  TIME=TZ=":Israel" date +"Auto commit @ %T | %a %d/%m/%y" && \
+  git -C $1 commit -m '$TIME' && \
+  git -C $1 push && \
+  echo "Pushed \'$1\' successfully" || echo "ACP failed"
+}
