@@ -33,5 +33,5 @@ function gitACP() {
   TIME=TZ=":Israel" date +"Auto commit @ %T | %a %d/%m/%y" && \
   git -C $1 commit -m '$TIME' && \
   git -C $1 push && \
-  echo "Pushed \'$1\' successfully" || echo "ACP failed"
+  echo "Pushed '$1' successfully" || echo "ACP failed"
 }
