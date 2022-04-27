@@ -31,6 +31,8 @@ function gitACP() {
   if [ -z "$1" ]; then
     echo "Please provide path to repository"
   else
+  # Proceed
+    # When a commit message is not provided, use a timestamp for it
     [ -z "$2" ] &&
       commitMessage=$(TZ=":Israel" date +"Auto commit @ %T | %a %d/%m/%y") ||
       commitMessage="$2"
