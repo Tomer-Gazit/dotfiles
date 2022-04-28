@@ -35,14 +35,20 @@ function gitACP() {
     [ -z "$2" ] &&
       commitMessage=$(TZ=":Israel" date +"Auto commit @ %T | %a %d/%m/%y") ||
       commitMessage="$2"
-    [ -z "$3" ] &&
       currenBranch=$(git -C $1 branch --show-current)
+    [ -z "$3" ] &&
       useBranch="echo 'commiting to current branch (${currentBranch})'" ||
-      useBranch="git -C $1 checkout $3" && currentBranch="$3" &&
+      [ "$3" != "${currentBranch}" ] &&
+      currentBranch="$3" &&
+      createStash="git -C $1 stash" &&
+      useBranch="git -C $1 checkout $3" &&
+      popStash="git -C $1 stash pop"
     [ -z "${@:4}" ] &&
       addFiles="--all" ||
       addFiles="${@:4}"
-    $useBranch &&
+    $createStash
+    $useBranch
+    $popStash
     git -C $1 add "$addFiles" &&
     git -C $1 commit -m "${commitMessage}" &&
     git -C $1 push &&
