@@ -51,6 +51,7 @@ function gitACP() {
   fi
 }
 
+<<<<<<< Updated upstream
 function testing(){
   if [ -z "$1" ]; then
     echo "'$1' not supplied"
@@ -70,3 +71,5 @@ function testing(){
   fi
 }
 
+=======
+>>>>>>> Stashed changes
