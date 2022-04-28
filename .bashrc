@@ -35,6 +35,7 @@ function gitACP() {
     [ -z "$2" ] &&
       commitMessage=$(TZ=":Israel" date +"Auto commit @ %T | %a %d/%m/%y") ||
       commitMessage="$2"
+<<<<<<< Updated upstream
     [ -z "$3" ] &&
       currenBranch=$(git -C $1 branch --show-current)
       useBranch="echo 'commiting to current branch (${currentBranch})'" ||
@@ -43,6 +44,20 @@ function gitACP() {
       addFiles="--all" ||
       addFiles="${@:4}"
     $useBranch &&
+=======
+      currenBranch=$(git -C $1 branch --show-current)
+    if [ -z "$3" ]; then
+      useBranch="echo 'commiting to current branch (${currentBranch})'"
+    elif [ currentBranch != "$3" ]; then
+      createStash="git -C $1 stash"
+      useBranch="git -C $1 checkout $3" &&
+      popStash="git -C $1 stash pop"
+    fi
+    [ -z "${@:4}" ] && addFiles="--all" || addFiles="${@:4}"
+    $createStash
+    $useBranch
+    $popStash
+>>>>>>> Stashed changes
     git -C $1 add "$addFiles" &&
     git -C $1 commit -m "${commitMessage}" &&
     git -C $1 push &&
@@ -51,6 +66,7 @@ function gitACP() {
   fi
 }
 
+<<<<<<< Updated upstream
 <<<<<<< Updated upstream
 function testing(){
   if [ -z "$1" ]; then
@@ -71,5 +87,7 @@ function testing(){
   fi
 }
 
+=======
+>>>>>>> Stashed changes
 =======
 >>>>>>> Stashed changes
