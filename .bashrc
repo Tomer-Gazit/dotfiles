@@ -35,7 +35,7 @@ function gitACP() {
     [ -z "$2" ] &&
       commitMessage=$(TZ=":Israel" date +"Auto commit @ %T | %a %d/%m/%y") ||
       commitMessage="$2"
-    [ -z "$3"] &&
+    [ -z "$3" ] &&
       currenBranch=$(git -C $1 branch --show-current)
       useBranch="echo 'commiting to current branch (${currentBranch})'" ||
       useBranch="git -C $1 checkout $3" && currentBranch="$3" &&
