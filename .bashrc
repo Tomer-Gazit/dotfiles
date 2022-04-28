@@ -50,23 +50,3 @@ function gitACP() {
     echo "ACP failed"
   fi
 }
-
-function testing(){
-  if [ -z "$1" ]; then
-    echo "'$1' not supplied"
-  else
-    [ -z "$2" ] &&
-      commitMessage=$(TZ=":Israel" date +"Auto commit @ %T | %a %d/%m/%y") ||
-        commitMessage="$2"
-        echo "${commitMessage}"
-        if [ -z "$3" ]; then
-          echo "use master"
-        else
-          echo "use $3"
-          [ -z "${@:4}" ] &&
-              echo "\${@:4} empty. adding all" ||
-              echo "lastly, ${@:4}"
-        fi
-  fi
-}
-
