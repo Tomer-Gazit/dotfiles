@@ -36,16 +36,14 @@ function gitACP() {
       commitMessage=$(TZ=":Israel" date +"Auto commit @ %T | %a %d/%m/%y") ||
       commitMessage="$2"
       currenBranch=$(git -C $1 branch --show-current)
-    [ -z "$3" ] &&
-      useBranch="echo 'commiting to current branch (${currentBranch})'" ||
-      [ "$3" != "${currentBranch}" ] &&
-      currentBranch="$3" &&
-      createStash="git -C $1 stash" &&
+    if [ -z "$3" ]; then
+      useBranch="echo 'commiting to current branch (${currentBranch})'"
+    elif [ currentBranch != "$3" ]; then
+      createStash="git -C $1 stash"
       useBranch="git -C $1 checkout $3" &&
       popStash="git -C $1 stash pop"
-    [ -z "${@:4}" ] &&
-      addFiles="--all" ||
-      addFiles="${@:4}"
+    fi
+    [ -z "${@:4}" ] && addFiles="--all" || addFiles="${@:4}"
     $createStash
     $useBranch
     $popStash
@@ -56,29 +54,3 @@ function gitACP() {
     echo "ACP failed"
   fi
 }
-<<<<<<< HEAD
-=======
-
-<<<<<<< Updated upstream
-function testing(){
-  if [ -z "$1" ]; then
-    echo "'$1' not supplied"
-  else
-    [ -z "$2" ] &&
-      commitMessage=$(TZ=":Israel" date +"Auto commit @ %T | %a %d/%m/%y") ||
-        commitMessage="$2"
-        echo "${commitMessage}"
-        if [ -z "$3" ]; then
-          echo "use master"
-        else
-          echo "use $3"
-          [ -z "${@:4}" ] &&
-              echo "\${@:4} empty. adding all" ||
-              echo "lastly, ${@:4}"
-        fi
-  fi
-}
-
-=======
->>>>>>> Stashed changes
->>>>>>> test-branch
