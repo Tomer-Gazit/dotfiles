@@ -1,0 +1,268 @@
+"" -- IDEAVIMRC --
+let mapleader="\<Space>"
+
+" " Source your .vimrc
+" source ~/.vimrc
+
+"" --Plugins --
+set highlightedyank
+    let g:highlightedyank_highlight_duration = "65"
+    let g:highlightedyank_highlight_color = "rgba(40, 123, 222, 65)"
+set sneak
+set surround
+
+"" Common settings
+set number
+set relativenumber
+
+let g:default_scrolloff = 2
+let &scrolloff = g:default_scrolloff
+let g:default_sidescrolloff = 4
+let &sidescrolloff = g:default_sidescrolloff
+let g:default_sidescroll = 1
+let &sidescroll = g:default_sidescroll
+let g:default_tabstop = 4
+
+set showmode
+set showcmd
+set ignorecase
+set smartcase
+set matchpairs=(:),[:],{:},<:>,‘:’,^:$
+set hlsearch
+set noideadelaymacro " Experimental. enables :normal commands
+
+"" -- Keymaps --
+" Better sidescroll
+nnoremap <expr> <C-l> Prepend(g:default_tabstop, 'zl')
+nnoremap <expr> <C-h> Prepend(g:default_tabstop, 'zh')
+" TODO Easier selection movements
+
+" Run line as Ex command
+nnoremap <Leader>: \"zyy:<C-r>z<BS>
+" Run selection as Ex command
+vnoremap <Leader>: \"zy:<C-r>z
+
+" Start %s
+nnoremap <Leader>s :%s/
+vnoremap <Leader>s :s/
+
+" Easier Escaping to normal
+inoremap jj <Esc>
+vnoremap <BS><BS> <Esc>
+
+" Toggle hlsearch off
+nnoremap <expr> <CR> &g:hlsearch ? NoHighlight() : '<CR>'
+vnoremap <expr> <CR> &g:hlsearch ? NoHighlight()."gv" : '<CR>'
+" Reload ideavimrc and remove highlighting
+map <expr> <C-S-O> ReloadVimrc()
+
+" Undo in insert mode
+inoremap <C-u> <C-o>u
+
+" Split line
+nnoremap gsj :call SplitLine()<CR>j
+nnoremap gsk :call SplitLine()<CR>j:move -2<CR>
+
+" Change first or last word in line
+nnoremap gci ^cw
+nnoremap gca g_caw
+" Change first or last WORD in line
+nnoremap gcI ^cW
+nnoremap gcA g_caW
+
+" Clear line (excluding BOL whitespace)
+nnoremap <expr> <Leader>dd SelectInsideLine(1)."d"
+" Clear line (including BOL whitespace)
+nnoremap <expr> <Leader>DD SelectInsideLine(0)."d"
+" Delete from cursor to Non-blank BOL
+nnoremap <Leader>d v^d
+" Delete from cursor to BOL
+nnoremap <Leader>D v0d
+" Insert mode - Delete all {entered} chars before cursor
+inoremap <C-d> <C-u>
+
+" Smarter gg / G
+nnoremap <expr> G line('.') == 1 ? 'G' : 'gg'
+nnoremap <expr> gg line('.') == line('$') ? 'gg' : 'G'
+vnoremap <expr> G line('.') == 1 ? 'G' : 'gg'
+vnoremap <expr> gg line('.') == line('$') ? 'gg' : 'G'
+
+" Go to Mid/End/Start of line
+nnoremap <expr> <S-Space>
+    \ col('.') == col('$') ?
+        \ '0' : (
+            \ (col('$')/2 > col('.')) ?
+                \ (col('$')/2) . '<bar>' :
+                \ '<End>'
+        \ )
+
+vnoremap <expr> <S-Space>
+    \ col('.') == col('$') ?
+        \ '0' : (
+            \ (col('$')/2 > col('.')) ?
+                \ (col('$')/2) . '<Bar>' :
+                \ '<End>'
+        \ )
+
+inoremap <expr> <S-Space><S-Space>
+    \ col('.') == col('$') ?
+        \ '<C-o>^' : (
+            \ (col('$')/2 > col('.')) ?
+                \ '<C-o>' . (col('$')/2) . '<Bar>' :
+                \ '<End>'
+        \ )
+
+" Format when using A
+nnoremap A ==A
+
+" Window navigation
+nnoremap <Leader><Leader>w <C-w>w
+nnoremap <Leader>h <C-w>h
+nnoremap <Leader>j <C-w>j
+nnoremap <Leader>k <C-w>k
+nnoremap <Leader>l <C-w>l
+nnoremap <Leader><Left> <C-w>h
+nnoremap <Leader><Down> <C-w>j
+nnoremap <Leader><Up> <C-w>k
+nnoremap <Leader><Down> <C-w>l
+" AAAAA bBBBB CcCCC DDdDD EEEeE EEEEe FffFf HelloWorld HelloWORLD
+" " Camel case movements
+nnoremap <Leader>w /\u\+<CR>:noh<CR>
+onoremap <Leader>w /\u\+<CR>:noh<CR>
+nnoremap <Leader>b ?\u\+<CR>:noh<CR>
+onoremap <Leader>b ?\u\+<CR>:noh<CR>
+nnoremap <Leader>W /[a-z]\@![a-zA-Z]*\u*[a-z\-_]\+<CR>:noh<CR>
+onoremap <Leader>W /[a-z]\@![a-zA-Z]*\u*[a-z\-_]\+<CR>:noh<CR>
+nnoremap <Leader>B ?[a-z]\@![a-zA-Z]*\u*[a-z\-_]\+<CR>:noh<CR>
+onoremap <Leader>B ?[a-z]\@![a-zA-Z]*\u*[a-z\-_]\+<CR>:noh<CR>
+
+" Toggle case of first letter in
+" " word
+nnoremap <Leader>cc m'b~``
+" " WORD
+nnoremap <Leader>CC m'Beb~``
+
+" Global insert before Word
+nnoremap <Leader>wi yiw:,$>/\<\(<C-r>0\)\>/\1/gc<C-Left><Left><Left><Left>
+" Global insert before WORD
+nnoremap <Leader>Wi yiW:,$s/\<\(<C-r>0\)\>/\1/gc<C-Left><Left><Left><Left>
+" Global append after word
+nnoremap <Leader>wa yiw:,$s/\<\(<C-r>0\)\>/\1/gc<C-Left><Left>
+" Global append after WORD
+nnoremap <Leader>Wa yiW:,$s/\<\(<C-r>0\)\>/\1/gc<C-Left><Left>
+
+" Make XML Tags
+" " In word with content
+nnoremap cxw :call TagifyXML('iw',0)<CR>f<Space>cl
+" " In word without content
+nnoremap cxxw :call TagifyXML('iw',1)<CR>f<Space>
+" " In WORD with content
+nnoremap cxW :call TagifyXML('iW',0)<CR>f<Space>cl
+" " In WORD without content
+nnoremap cxxW :call TagifyXML('iW',1)<CR>f<Space>
+" " In Line with content
+nnoremap cxl :call TagifyXML('^o$',0)<CR>%f<Space>cl
+" " In Line without content
+nnoremap cxxl :call TagifyXML('^o$',1)<CR>%F<Space>
+
+" Format Synerion table to time array
+nnoremap <Leader>ft :%g!#\(0\{2}\)\@\<!:#d<CR>:%s#\(.*\)\n#"\1"#g<CR>:s#""#", "#g<CR>I@(<Esc>A)<Esc>
+
+" Turn line to comment banner
+nnoremap <Leader><Leader>cb :call CommentBanner()<CR>mc
+
+" Toggle centering line on screen
+nnoremap <Leader><C-s> :call ToggleCenteredMode()<CR>
+
+" Yank to clipboard
+vnoremap <Leader>y "*y
+nnoremap <Leader>y "*y
+" Put from clipboard
+vnoremap <Leader>p "*p
+nnoremap <Leader>p "*p
+nnoremap <Leader>P "*P
+
+" Keep selection after indenting actions
+vnoremap < <gv
+vnoremap > >gv
+
+"" -- Functions --
+function! NoHighlight()
+    noh
+    return 1."<Esc>"
+endfunction
+
+function! ReloadVimrc()
+    :action IdeaVim.ReloadVimRc.reload
+    noh
+    return 1."<Esc>"
+endfunction
+
+" Comment banner
+function! CommentBanner()
+    execute 's#^\(\s\+\)*\(.*$\)#\1// ---------- \U\2 ----------#'
+    noh
+    normal ``13l
+endfunction
+
+" Clear line
+function! SelectInsideLine(excludeStartingWhitespace)
+    execute a:excludeStartingWhitespace ? "let motion = '^'" : "let motion = '0'"
+    execute ":norm ".motion."vo$"
+    return ""
+endfunction
+
+" Clear registers
+function! ClearRegisters()
+    let regs='abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789/-="*+'
+    let i=0
+    let regsCount = len(regs)
+    while (i<regsCount)
+        execute 'let @'.regs[i].'=""'
+        let i=i+1
+    endwhile
+endfunction
+
+function! ToggleCenteredMode()
+    if &scrolloff != 50
+        let g:old_scrolloff = &scrolloff
+        let &scrolloff = 50
+    else
+        let &scrolloff = g:old_scrolloff
+    endif
+endfunction
+
+" Variable Prepend
+function! Prepend(prefix, content)
+    let prepended = a:prefix . a:content
+    execute ":normal " . prepended
+    return ""
+endfunction
+
+function! SplitLine()
+    execute 'substitute/\%' . col('.') . 'c/\r'
+    noh
+    normal! j==k
+endfunction
+
+function! TagifyXML(motion, makeEmpty)
+    execute ":normal v" . a:motion
+    let selectionEndCol = col(".") + 1
+    execute ":normal v" . a:motion ."o"
+    let selectionStartCol = col(".")
+    let subStartPoint = '\%'.selectionStartCol.'c'
+    let subContent = '.*'
+    let subEndPoint = '\%'.selectionEndCol.'c'
+    if a:makeEmpty
+        let subReplacement = '<\0 />'
+    else
+        let subReplacement = '<\0> </\0>'
+    endif
+    let subCommand = 'substitute#' . subStartPoint . subContent .subEndPoint . '#' . subReplacement
+    execute subCommand
+    " Make sure ending tag only contains node name
+    execute 'substitute#<.\+> </.\{-}\zs\s.\+\ze>#'
+    noh
+endfunction
+
+" Find more examples here: https://jb.gg/share-ideavimrcset
