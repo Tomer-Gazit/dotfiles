@@ -1,0 +1,33 @@
+Windows Registry Editor Version 5.00
+
+;Requires Local Administrator Permissions
+;Requires Reboot after applying to start working
+;The purpose of this registry edit is to remap keys as follows:
+
+;Remaps FROM	>	TO KEY		| NOTES
+;---------------------------------------|------
+;CapsLock	> 	Backspace	| CapsLock isn't very usefull, and being able to delete with the left hand is a much better deal
+;ScrollLock	>	CapsLock	| We may still want CapsLock. ScrollLock is an actually useless key, so we replace it. 
+;IntlBackslash	>	Delete		| IntlBackslash is the '\|' key placed near the LeftShift on ISO layout keyboards. When present, we can use it to delete forwards.
+;----------------------------------------------
+
+;The key itself:
+
+[HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Keyboard Layout]
+"Scancode Map"=hex:00,00,00,00,00,00,00,00,04,00,00,00,0e,00,3a,00,3a,00,46,00,53,e0,56,00,00,00,00,00
+
+;Decyphering the key:
+;Start by padding eight 00s to fill the binary, as follows:
+;;[00,00,00,00,00,00,00,00]
+;Calculate (n+1), n being the amount of keys you want to remap. Here I'm remapping 3 keys, so 3+1=04. then fill the binary by appending 00s:
+;;[04,00,00,00]
+;Now put the scancode for the key you want to remap TO, and after it put the original key that you want to remap FROM. Imagine putting the 1st value ON the 2nd value.
+;If you want to disable a key, use [00,00] for the 1st value, and the key to disable as the 2nd value.
+;Since I want to put Backspace on CapsLock, my 1st value is [0e,00](Backspace) and my 2nd value is [3a,00](CapsLock), resulting in:
+;;[0e,00,3a,00]
+;Continue doing it for each mapping you want. Here I'm also putting (CapsLock)[3a,00] instead of (ScrollLock)[46,00] and (Delete)[53,e0] on (IntlBackslash)[56,00]
+;;[3a,00,46,00,53,e0,56,00]
+;To finish remapping, append four 00s at the end:
+;;[00,00,00,00]
+;Concatenating all the steps gives us a binary that looks like this:
+;;00,00,00,00,00,00,00,00,04,00,00,00,0e,00,3a,00,3a,00,46,00,53,e0,56,00,00,00,00,00
