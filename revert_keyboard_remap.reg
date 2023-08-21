@@ -1,0 +1,7 @@
+Windows Registry Editor Version 5.00
+
+;Requires Local Administrator Permissions
+;Requires Reboot after applying to start working
+
+[HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Keyboard Layout]
+"Scancode Map"=-
